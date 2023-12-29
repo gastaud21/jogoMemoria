@@ -25,8 +25,8 @@ function App() {
     setPremio(valorGanho);
     setNome(jogador);
     //console log
-    console.log(marcas);
-    console.log(palas);
+    // console.log(marcas);
+    // console.log(palas);
   }
 
   function clicaPala(escolha) {
@@ -80,6 +80,7 @@ function App() {
                   type="text"
                   className="form-control"
                   placeholder="Nome do Apostador"
+                  disabled={apostou}
                   required
                   {...register("nome")}
                 />
@@ -89,12 +90,19 @@ function App() {
                   type="number"
                   className="form-control"
                   placeholder="Valor R$"
+                  min={1}
+                  step={1}
+                  disabled={apostou}
                   required
                   {...register("aposta")}
                 />
               </div>
               <div className="col">
-                <button type="submit" className="btn btn-success">
+                <button
+                  type="submit"
+                  className="btn btn-success"
+                  disabled={apostou}
+                >
                   Apostar
                 </button>
               </div>
@@ -122,7 +130,7 @@ function App() {
               <div className="col">{/* <p>importar aqui a fig</p> */}</div>
             </div>
             <div className="row">
-              <div className="col">
+              <div className="col mb-3">
                 <button
                   onClick={() => clicaPala(palas[0])}
                   disabled={jaEscolheu}
@@ -140,7 +148,7 @@ function App() {
                   )}
                 </button>
               </div>
-              <div className="col">
+              <div className="col mb-3">
                 <button
                   onClick={() => clicaPala(palas[1])}
                   disabled={jaEscolheu}
@@ -160,7 +168,7 @@ function App() {
               </div>
             </div>
             <div className="row">
-              <div className="col">
+              <div className="col mb-3">
                 <button
                   onClick={() => clicaPala(palas[2])}
                   disabled={jaEscolheu}
@@ -178,7 +186,7 @@ function App() {
                   )}
                 </button>
               </div>
-              <div className="col">
+              <div className="col mb-3">
                 <button
                   onClick={() => clicaPala(palas[3])}
                   disabled={jaEscolheu}
@@ -202,7 +210,11 @@ function App() {
             {jaEscolheu ? (
               marcas[0] == viraCarta ? (
                 <h5 className="text-success">
-                  Parabéns {nome}! Você acertou e ganhou R${premio} .
+                  Parabéns {nome}! Você acertou e ganhou R$
+                  {premio.toLocaleString("pt-br", {
+                    minimumFractionDigits: 2,
+                  })}{" "}
+                  .
                 </h5>
               ) : (
                 <h5 className="text-danger">
